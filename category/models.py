@@ -13,8 +13,12 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("category:ProductListByCategory", args=[self.slug])
-    
+        return reverse('category:ProductListByCategory', args=[self.slug])
+"""    
+def get_upload_path(instanse, filename):
+    filename = instanse.slug + '.' + filename.split('.')[1]
+    return os.path.join('images/', filename)
+"""
 
 class Product(models.Model):
     category = models.ForeignKey(Category , related_name='products', on_delete=models.CASCADE)
@@ -36,5 +40,4 @@ class Product(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("category:ProductDetails", args=[ self.id, self.slug])
-    
+        return reverse('category:ProductDetails', args=[ self.id, self.slug])

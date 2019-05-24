@@ -1,4 +1,4 @@
-{% extends 'shop/base.html' %}
+{% extends 'category/base.html' %}
 {% load static %}
 {% block title %}
   {% if category %} {{ category.name }} {% else %} Katalog {% endif %}
@@ -8,7 +8,7 @@
     <h3>Kategorji</h3>
     <ul>
       <li {% if not category %} class="selected" {% endif %}>
-        <a href="{% url "shop:ProductList" %}">Wszystko</a>
+        <a href="{% url "category:ProductList" %}">Wszystko</a>
       </li>
       {% for cat in categories %}
         <li {% if category.slug == cat.slug %} class="selected" {% endif %}>
@@ -23,7 +23,7 @@
       {% for product in products %}
         <div class="item col-sm-4">
           <a href="{{ product.get_absolute_url }}">
-            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" class="img-responsive">
+            <img src="{% if product.images %}{{ product.images.url }}{% else %}{% static 'img/no-image.jpg'%}{% endif %}" class="img-responsive">
           </a>
           <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
           {{ product.price }} $

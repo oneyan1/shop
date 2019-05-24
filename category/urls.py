@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path
-from . views import ProdList, ProdDetail
+from category.views import ProdList, ProdDetail
+
+app_name = 'category'
 
 urlpatterns = [
     path('', ProdList, name='ProductList'),
