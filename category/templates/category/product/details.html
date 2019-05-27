@@ -1,22 +1,23 @@
-{% extends "category/base.html" %}
-{% load static %}
+{% extends 'category/base.html' %}
 {% block title %}
   {{ product.name }}
 {% endblock %}
 {% block content %}
-  <div class="product-detail">
-    <div class="col-sm-4">
-      <img src="{% if product.images %}{{ product.images.url }}{% else %}{% static 'img/no-image.jpg'%}{% endif %}" class="img-responsive">
-    </div>
-    <div class="col-sm-8">
-      <h1>{{ product.name }}</h1>
-      <h2><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>
-      <p class="price">
-        {{ product.price }} $
-      </p>
-      <span>
-        {{ product.description | linebreaks}}
-      </span>
-    </div>
-  </div>
+
+<div class="container">
+        <div class="row">
+            <div class="col-xl-6">
+                    <img src="{{ product.images.url }}" alt="no_img" >
+            </div>
+            <div class="col-xl-6">
+                <h1>{{ product.name }}</h1>
+                <p>{{ product.description  }}</p>
+
+                <button type="button" value="Previous Page" class="btn btn-outline-warning" onClick="window.history.back();return false;">
+                    Powrot
+                </button>
+            </div>
+        </div>
+</div>
+
 {% endblock %}

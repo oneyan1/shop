@@ -1,3 +1,45 @@
-.container{
-    background-color: red;
+body {
+  margin: 0;
+  font-family: "Roboto",sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+img {
+  max-width: 100%;
+}
+
+.header{
+    text-align: center;
+    padding: 25px 0;
+}
+.header-logo__img{
+    border:none;
+    background-color: white;
+}
+.header-info__nav{
+    margin-right: 25px;
+    color: black;
+}
+.button{
+    padding: 10px 45px;
+    border: 2px solid gray;
+    border-radius: 25px;
+    background-color: white;
+    margin-right: 20px;
+}
+button:focus {
+  outline: none;
+}
+.button-o{
+    padding: 10px 20px;
+    text-align:center;
+    border: none;
+}
+.button-img{
+    max-width: 25px;
+}
+
+.list-group-item{
+    color: red;
 }
