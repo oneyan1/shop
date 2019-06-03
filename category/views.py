@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from . models import Category, Product
-from django.views.generic import (ListView, DetailView)
+
+from cart.forms import CartAddProductForm
 
 # Strona z listą produktów
 def ProdList(requiest, category_slug=None):
@@ -21,5 +22,7 @@ def ProdList(requiest, category_slug=None):
 # Strona produktu 
 def ProdDetail(requiest, id, slug):
     product = get_object_or_404(Product, id = id, slug = slug, available = True)
-    context = {'product': product}
+    cart_product_form = CartAddProductForm()
+    context = {'product': product,
+               'cart_product_form': cart_product_form}
     return render(requiest, "category/product/details.html", context)
