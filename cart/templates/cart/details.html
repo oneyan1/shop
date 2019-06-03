@@ -1,18 +1,18 @@
 {% extends "category/base.html" %}
 {% block title %}
-  Ваша корзина товаров
+  Kosz
 {% endblock %}
 {% block content %}
-  <h1>Ваша корзина товаров</h1>
+  <h1>Kosz</h1>
   <table class="cart">
     <thead>
       <tr>
-        <th>Изображение</th>
-        <th>Продукт</th>
-        <th>Количество</th>
-        <th>Удалить</th>
-        <th>Полная цена</th>
-        <th>Цена</th>
+        <th>Zdęcie</th>
+        <th>Produkt</th>
+        <th>Ilość</th>
+        <th>Usunuć</th>
+        <th>All price</th>
+        <th>Price</th>
       </tr>
     </thead>
     <tbody>
@@ -26,21 +26,21 @@
             </td>
             <td>{{ product.name }}</td>
             <td>{{ item.quantity }}</td>
-            <td><a href="{% url 'cart:CartRemove' product.id %}">Удалить</a></td>
-            <td class="num">{{ item.price }} руб.</td>
-            <td class="num">{{ item.total_price }} руб.</td>
+            <td><a href="{% url 'cart:CartRemove' product.id %}">Usunuć</a></td>
+            <td class="num">{{ item.price }} $</td>
+            <td class="num">{{ item.total_price }} $</td>
           </tr>
         {% endwith %}
       {% endfor %}
         <tr class="total">
           <td>Total</td>
           <td colspan="4"></td>
-          <td class="num">{{ cart.get_total_price }} руб.</td>
+          <td class="num">{{ cart.get_total_price }} $</td>
         </tr>
     </tbody>
   </table>
   <p class="text-right">
-    <a href="{% url 'category:ProdList'%}" class="btn">Продолжить Шопинг</a>
-    <a href="#">Оформить заказ</a>
+    <a href="{% url 'category:ProductList'%}" class="btn">Dalej</a>
+    <a href="#">Place</a>
   </p>
 {% endblock %}

@@ -15,10 +15,10 @@
 
                 <p class="price">{{ product.price }} руб.</p>
                 <form action="{% url 'cart:CartAdd' product.id %}" method="post">
-                        {% csrf_token %}
                         {{ cart_product_form }}
-                        <input type="submit" value="add to cart" class="btn btn-outline-danger">
-                    </form>
+                        {% csrf_token %}
+                    <input type="submit" value="Dodaj do kosza" class="btn btn-outline-danger">
+                </form>
                 <button type="button" value="Previous Page" class="btn btn-outline-warning" onClick="window.history.back();return false;">
                     Powrot
                 </button>
