@@ -1,0 +1,28 @@
+{% extends "category/base.html" %}
+
+{% block title %}
+  Zamówenie
+{% endblock %}
+
+{% block content %}
+  <h1>Zamóweinie</h1>
+  <div class="col-sm-4">
+    <h2>Formuliaż:</h2>
+    <form class="order-form" action="." method="post">
+      {{ form.as_p }}
+      {% csrf_token %}
+      <input type="submit" value="Отправить">
+    </form>
+  </div>
+
+  <div class="order-info col-sm-8">
+    <h2>Podsumowanie</h2>
+    <ul>
+      {% for item in cart  %}
+        <li>
+          {{ item.product.name }} | Ilość: {{ item.quantity }} | Cena: {{ item.total_price }}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

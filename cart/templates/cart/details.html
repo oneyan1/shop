@@ -46,6 +46,6 @@
   </table>
   <p class="text-right">
     <a href="{% url 'category:ProductList'%}" class="btn">Dalej</a>
-    <a href="#" class="btn">Place</a>
+    <a href="{% url 'orders:OrderCreate' %}" class="btn">Place</a>
   </p>
 {% endblock %}
