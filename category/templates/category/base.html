@@ -12,7 +12,6 @@
   </head>
 
   <body>
-  <a name="top"></a>
     <header class="header">
         <div class="container">
             <div class="row align-items-center">
@@ -33,10 +32,20 @@
                 </div>
                 <div class="col-3">
                     <div class="header-call">
-                        <button class="button button-o">
-                            <img class="button-img" src="{% static 'img/shopping-cart.svg'%}" alt="">
-                        </button>
-                        <button class="button">Kupić</button>
+                        <div class="cart">
+                            {% with total_items=cart|length %}
+                            {% if cart|length > 0 %}
+                            <button class="button">Kosz:</button>
+                             <a href="{% url "cart:CartDetail" %}">
+                                {{ total_items }} тов. {{ cart.get_total_price }} руб.
+                             </a>
+                            {% else %}
+                                <button class="button button-o">
+                                    <img class="button-img" src="{% static 'img/shopping-cart.svg'%}" alt="">
+                                </button>
+                            {% endif %}
+                        {% endwith %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -46,12 +55,10 @@
     <section class="sale">
         <div class="container">
             <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                         {% block content %}
-                </div>
-                <div class="col-6">
                         {% endblock %}
-                </div>
+                </div> 
             </div>
         </div>
     </section>

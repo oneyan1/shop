@@ -6,20 +6,20 @@
 
 <div class="container">
         <div class="row">
-            <div class="col-xl-6">
+            <div class="col-7">
                     <img src="{{ product.images.url }}" alt="no_img" >
             </div>
-            <div class="col-xl-6">
+            <div class="col-5">
                 <h1>{{ product.name }}</h1>
                 <p>{{ product.description  }}</p>
 
-                <p class="price">{{ product.price }} руб.</p>
+                <p class="price">{{ product.price }} $</p>
                 <form action="{% url 'cart:CartAdd' product.id %}" method="post">
                         {{ cart_product_form }}
                         {% csrf_token %}
-                    <input type="submit" value="Dodaj do kosza" class="btn btn-outline-danger">
+                    <input type="submit" value="Dodaj do kosza" class="btn btn-info">
                 </form>
-                <button type="button" value="Previous Page" class="btn btn-outline-warning" onClick="window.history.back();return false;">
+                <button type="button" value="Previous Page" class="btn btn-info" onClick="window.history.back();return false;">
                     Powrot
                 </button>
             </div>
