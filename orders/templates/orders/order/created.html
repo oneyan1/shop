@@ -7,4 +7,5 @@
 {% block content %}
   <h1>Dzękujemy za zamówenie</h1>
   <p>Numer indyfikacyjny zamówenia: {{ order.id }}</p>
+  <a href="{% url 'category:ProductList'%}" class="btn">Dalej</a>
 {% endblock %}
