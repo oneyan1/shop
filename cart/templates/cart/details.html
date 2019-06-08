@@ -1,51 +1,102 @@
-{% extends "category/base.html" %}
-{% block title %}
-  Kosz
-{% endblock %}
+{% extends 'category/base.html' %}
+{% load static %}
+
+
 {% block content %}
-  <h1>Kosz</h1>
-  <table class="cart">
-    <thead>
-      <tr>
-        <th>Zdęcie</th>
-        <th>Produkt</th>
-        <th>Ilość</th>
-        <th>Usunuć</th>
-        <th>All price</th>
-        <th>Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in cart %}
-        {% with product=item.product %}
-          <tr>
-            <td>
-              <a href="{{ product.get_absolute_url }}">
-                <img src="{{ product.images.url }}" alt="" />
-              </a>
-            </td>
-            <td>{{ product.name }}</td>
-            <form action="{% url "cart:CartAdd" product.id %}" method="post" class="add">
-                {{ item.update_quantity_form.quantity }}
-                {{ item.update_quantity_form.update }}
+    <div class="container">
+        <div class="row" style="margin-top: 6%">
+        <h2>
+            <span class="badge pull-right">
+                {% with totail_items=cart|length %}
+                    {% if cart|length > 0 %}
+                        Текущий список покупок:
+                        <a href="{% url "cart:CartDetail" %}" style="color: #ffffff">
+                            {{ totail_items }} item {{ totail_items|pluralize }}, {{ cart.get_total_price }}
+                        </a>
+                        {% else %}
+                        Your cart is empty.
+                    {% endif %}
+                {% endwith %}
+            </span>
+        </h2>
+        <table class="table table-dark table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Изображение</th>
+                <th scope="col">Товар</th>
+                <th scope="col">Кол-во</th>
+                <th scope="col">Удалить</th>
+                <th scope="col">Цена одного товара</th>
+                <th scope="col">Цена</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                    {% with product=item.product  %}
+                        <tr>
+                            <th scope="row">
+                                <a href="{{ product.get_absolute_url }}">
+                                    <img src="{% if product.images %} {{ product.images.url }} {% else %} {% static 'img/default.jpg' %} {% endif %}" alt="..." style="height: 130px; width: auto">
+                            </a>
+                            </th>
+                            <td>{{ product.name }}</td>
+                            <td>
+                            <form action="{% url "cart:CartAdd" product.id %}" method="post">
+                                {% csrf_token %}
+                                <span style="display:inline-block">    
+                                    {{ item.update_quantity_form.quantity }}
+                                    {{ item.update_quantity_form.update }}
+                                    <input type="submit" value="Изменить" class="btn btn-outline-info"style="margin-top:10%;">
+                                </span>
+                            </form>
+                            </td>
+                            <td>
+                                <a href="{% url "cart:CartRemove" product.id %}">Удалить</a>
+                            </td>
+                            <td> {{ item.price }}</td>
+                            <td> {{ item.total_price }}</td>
+                        </tr>
+                    {% endwith %}
+                {% endfor %}
+
+                {% if cart.cupon %}
+                <tr>
+                    <td><b>Cena koncowa bez zniżki</b></td>
+                    <td colspan="4"></td>
+                    <td colspan="num"><b> {{ cart.getTotalPrice }}</b></td>
+                </tr>
+                <tr>
+                <td>
+                "{{cart.cupon.code}}" kupon na ({{ cart.cupon.discount }}% zniżki)
+                </td>
+                <td colspan="4"></td>
+                    <td class="num discount">- {{ cart.getDiscount }} руб.</td>
+                    </tr>
+                    {% endif %}
+                    <tr class="total">
+                <td>Всего</td>
+                <td colspan="4"></td>
+                <td class="num">{{ cart.getTotalPriceAfterDiscount}} руб.</td>
+                </tr>
+            </tbody>
+          </table>
+        </tbody>
+            </table>
+               
+
+        <p class="text-right">
+            <a href="{% url "category:ProductList" %}" class="btn btn-default">Продолжить покупку</a>
+            <a href="{% url "orders:OrderCreate" %}" class="btn btn-primary">Оформить заказ</a>
+        </p>
+
+
+        <p class= "text-right">Применить купон</p>
+                <form action="{% url "cupons:apply"%}" method="post">
+                 
+                 {{ cupon_aplly_form }}
+                <input type="submit" value="Обновить">
                 {% csrf_token %}
-                  <input type="submit" value="Odswiez">
-            </form>
-            <td><a href="{% url 'cart:CartRemove' product.id %}">Usunuć</a></td>
-            <td class="num">{{ item.price }} $</td>
-            <td class="num">{{ item.total_price }} $</td>
-          </tr>
-        {% endwith %}
-      {% endfor %}
-        <tr class="total">
-          <td>Total</td>
-          <td colspan="4"></td>
-          <td class="num">{{ cart.get_total_price }} $</td>
-        </tr>
-    </tbody>
-  </table>
-  <p class="text-right">
-    <a href="{% url 'category:ProductList'%}" class="btn">Dalej</a>
-    <a href="{% url 'orders:OrderCreate' %}" class="btn">Place</a>
-  </p>
+                </form>  
+        </div>
+    </div>
 {% endblock %}

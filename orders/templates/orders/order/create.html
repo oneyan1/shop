@@ -5,8 +5,12 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Zamóweinie</h1>
-  <div class="col-sm-4">
+
+  <div class="container">
+    <div class="row">
+    
+    <div class="col-4">
+    <h1>Zamóweinie</h1>
     <h2>Formuliaż:</h2>
     <form class="order-form" action="." method="post">
       {{ form.as_p }}
@@ -15,7 +19,7 @@
     </form>
   </div>
 
-  <div class="order-info col-sm-8">
+  <div class="col-8">
     <h2>Podsumowanie</h2>
     <ul>
       {% for item in cart  %}
@@ -23,6 +27,15 @@
           {{ item.product.name }} | Ilość: {{ item.quantity }} | Cena: {{ item.total_price }}
         </li>
       {% endfor %}
+      {% if cart.cupon %}
+        <li>
+        "{{ cart.cupon.code}}"(na {{ cart.cupone.discount }}% mnej)
+        <span> - {{cart.getDiscount}}$. </span>
+        </li>
+        {% endif %}
     </ul>
+    <p><strong>Razem:</strong> {{ cart.getTotalPriceAfterDiscount }}$.</p>
+  </div>
+  </div>
   </div>
 {% endblock %}

@@ -4,6 +4,7 @@ from django.views.decorators.http import require_POST
 from category.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
+from cupons.forms import CuponApllyForm
 
 @require_POST
 def CartAdd(request, product_id):
@@ -24,4 +25,8 @@ def CartRemove(request, product_id):
 
 def CartDetail(request):
     cart = Cart(request)
-    return render(request, 'cart/details.html', {'cart':cart})
+    for item in cart:
+            item['update_quantity_form'] = CartAddProductForm(
+                    initial={'quantity': item['quantity'], 'update': True})
+    cupon_aplly_form = CuponApllyForm()    
+    return render(request, 'cart/details.html', {'cart':cart, 'cupon_aplly_form': cupon_aplly_form})

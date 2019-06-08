@@ -1,5 +1,8 @@
 from django.db import models
 from category.models import Product
+from cupons.models import Cupon
+from decimal import Decimal
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Order(models.Model):
     first_name = models.CharField(max_length = 50, verbose_name='Imie')
@@ -11,15 +14,21 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name='Data utworzenia')
     updated = models.DateTimeField(auto_now=True, verbose_name='Data odświeżenia')
     paid = models.BooleanField(default=False, verbose_name='Opłata')
+    cupon = models.ForeignKey(Cupon, related_name='orders', null = True, blank = True,on_delete=models.CASCADE)
+    discount = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
+
 
     class Meta:
         ordering = ('-created',)
 
     def __str__(self):
         return 'Zamóweinie: {}'.format(self.id)
+
+    def get_total_price(self):
+        total_price = sum(item.get_cost() for item in self.items.all())
+        return total_price - total_price * (self.discount / Decimal('100'))
     
-    def get_total_cost(self):
-        return sum(item.get_cost() for item in self.item.all())
+   
     
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name = 'items',on_delete=models.CASCADE)
@@ -32,4 +41,3 @@ class OrderItem(models.Model):
 
     def get_cost(self):
         return self.price * self.quantity
-
