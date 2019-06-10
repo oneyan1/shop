@@ -6,14 +6,18 @@
 
 {% block content %}
 
+{% block css %}
+<style>
+.card-img-top{
+    object-position: 50% 50%;
+}
+</style>
+{% endblock %}
+
     <div class="container">
       <div class="row">
         <div class="col-3">
             <ul class="list-group">
-                    <li class="list-group-item">
-                        <a href="/">Wszystko</a>
-                    </li>
-                    <br>
                 {% for category in categories %}
                     <li class="list-group-item">
                         <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
@@ -32,7 +36,7 @@
                         <div class="col-6">
                         <div class="card-group" style="margin-bottom: 20px;">
                             <a class="card" href="{{ product.get_absolute_url }}" style="padding:15px;border:none;">
-                                <img class="card-img-top" src="{{product.images.url }}" alt="product image" style="max-height: 270px;">
+                                <img class="card-img-top" src="{{product.images.url }}" alt="product image">
                                     <div class="card-body">
                                            <h5 class="card-title" style="text-align:center;">{{product.name}}</h5>
                                    </div>

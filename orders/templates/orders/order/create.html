@@ -7,35 +7,17 @@
 {% block content %}
 
   <div class="container">
-    <div class="row">
-    
-    <div class="col-4">
-    <h1>Zamóweinie</h1>
-    <h2>Formuliaż:</h2>
-    <form class="order-form" action="." method="post">
-      {{ form.as_p }}
-      {% csrf_token %}
-      <input type="submit" value="Отправить">
-    </form>
-  </div>
-
-  <div class="col-8">
-    <h2>Podsumowanie</h2>
-    <ul>
-      {% for item in cart  %}
-        <li>
-          {{ item.product.name }} | Ilość: {{ item.quantity }} | Cena: {{ item.total_price }}
-        </li>
-      {% endfor %}
-      {% if cart.cupon %}
-        <li>
-        "{{ cart.cupon.code}}"(na {{ cart.cupone.discount }}% mnej)
-        <span> - {{cart.getDiscount}}$. </span>
-        </li>
-        {% endif %}
-    </ul>
-    <p><strong>Razem:</strong> {{ cart.getTotalPriceAfterDiscount }}$.</p>
-  </div>
-  </div>
-  </div>
+        <div class="row align-items-center" style="margin-top: 2%">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <h3 class="page-header" style="margin-bottom:25 px">Zamóweinie</h3>
+                <form action="." method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}<br>
+                    <input type="submit" class="btn btn-primary" value="Dalej" style="margin-bottom:25px">
+                </form>
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </div>
 {% endblock %}

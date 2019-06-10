@@ -3,15 +3,25 @@ body {
   font-family: "Roboto",sans-serif;
   font-size: 18px;
   font-weight: 400;
+  
 }
 
 img {
   max-width: 100%;
 }
 
+a:hover{
+    text-decoration: none;
+}
+
 .header{
     text-align: center;
     padding: 25px 0;
+}
+
+.header-info{
+    font-family: 'Cuprum', sans-serif;
+    text-transform: uppercase;
 }
 .header-logo__img{
     border:none;
@@ -19,7 +29,12 @@ img {
 }
 .header-info__nav{
     margin-right: 25px;
+    padding: 10px 15px;
     color: black;
+}
+.header-info__nav:hover{
+    background-color: rgb(49, 49, 206);
+    color: white;
 }
 .button{
     padding: 10px 45px;
@@ -40,6 +55,31 @@ button:focus {
     max-width: 25px;
 }
 
-.list-group-item{
-    color: red;
+.button-circle{
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    background-color: blue;
+    text-align: center;
+
+}
+
+.button-circle__item{
+    color: white;
+    font-size: 10px;
+}
+
+.footer{
+    background-image: linear-gradient(45deg, #9dc66b 5%, #4fa49a 30%, #4361c2);
+    
+}
+
+.firm{
+    color: white;
+    padding-top: 75px;
+    font-family: 'Cuprum', sans-serif;
+}
+.maps{
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
