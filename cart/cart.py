@@ -12,18 +12,24 @@ class Cart(object):
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
         self.cupon_id = self.session.get('cupon_id')
-   
-
-
+    
+    
     def add(self, product, quantity=1, update_quantity = False):
         product_id = str(product.id)
+        prod_object = Product.objects.get(id =product.id)
         if product_id not in self.cart:
-           self.cart[product_id] = {'quantity':0,
+            self.cart[product_id] = {'quantity':0,
                                     'price': str(product.price)}
         if update_quantity:
+            quantity_upper = quantity - self.cart[product_id]['quantity']
             self.cart[product_id]['quantity'] = quantity
+            prod_object.quantity = prod_object.quantity - quantity_upper
         else:
             self.cart[product_id]['quantity'] += quantity
+            prod_object.quantity = prod_object.quantity - self.cart[product_id]['quantity']
+        if prod_object.quantity == 0:
+            prod_object.available = False
+        prod_object.save()
         self.save()
 
     def save(self):
@@ -32,6 +38,12 @@ class Cart(object):
 
     def remove(self, product):
         product_id = str(product.id)
+        quantity = self.cart[product_id]['quantity']
+        prod_object = Product.objects.get(id =product.id)
+        prod_object.quantity = prod_object.quantity + quantity
+        if prod_object.available == False and quantity > 1:
+            prod_object.available = True
+        prod_object.save()
         if product_id in self.cart:
             del self.cart[product_id]
             self.save()
@@ -56,7 +68,10 @@ class Cart(object):
     def clear(self):
         del self.session[settings.CART_SESSION_ID]
         self.session.modified = True 
-        
+
+    def getQuantity(self):
+        return item['quantity']
+
     @property
     def cupon(self):
         if self.cupon_id:

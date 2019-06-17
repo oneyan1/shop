@@ -10,7 +10,7 @@ from cupons.forms import CuponApllyForm
 def CartAdd(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
-    form = CartAddProductForm(request.POST)
+    form = CartAddProductForm(request.POST) 
     if form.is_valid():
         cd = form.cleaned_data
         cart.add(product = product, quantity = cd['quantity'],
@@ -26,7 +26,7 @@ def CartRemove(request, product_id):
 def CartDetail(request):
     cart = Cart(request)
     for item in cart:
-            item['update_quantity_form'] = CartAddProductForm(
+        item['update_quantity_form'] = CartAddProductForm(
                     initial={'quantity': item['quantity'], 'update': True})
     cupon_aplly_form = CuponApllyForm()    
     return render(request, 'cart/details.html', {'cart':cart, 'cupon_aplly_form': cupon_aplly_form})
